@@ -1,6 +1,53 @@
 export type SlideType = "cover" | "content" | "cta";
 export type PlanId = "free" | "pro" | "business";
 
+// ─── AI Review types ────────────────────────────────────────────────────────
+
+export type SlideIssueType =
+  | "weak_title"
+  | "body_too_long"
+  | "generic_cta"
+  | "low_clarity"
+  | "missing_hook"
+  | "no_value"
+  | "off_topic";
+
+export interface SlideIssue {
+  type: SlideIssueType;
+  description: string;
+}
+
+export interface SlideScores {
+  clarity: number;
+  persuasion: number;
+  engagement: number;
+}
+
+export interface SlideReview {
+  slideIndex: number;
+  scores: SlideScores;
+  overallScore: number;
+  issues: SlideIssue[];
+  suggestedTitle: string;
+  suggestedBody: string;
+  accepted: boolean | null;
+}
+
+export type CarouselVerdict = "approved" | "needs_revision";
+
+export interface CarouselReview {
+  overallScore: number;
+  verdict: CarouselVerdict;
+  verdictReason: string;
+  slideReviews: SlideReview[];
+}
+
+export interface GenerationMeta {
+  topic: string;
+  tone: string;
+  niche: string;
+}
+
 export interface SlideData {
   index: number;
   type: SlideType;

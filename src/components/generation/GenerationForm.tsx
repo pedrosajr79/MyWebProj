@@ -7,11 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { THEMES, TONES, NICHES } from "@/types/carousel";
-import type { GenerationRequest, ThemeConfig, SlideData } from "@/types/carousel";
+import type { GenerationRequest, ThemeConfig, SlideData, GenerationMeta } from "@/types/carousel";
 import { Sparkles, Check } from "lucide-react";
 
 interface Props {
-  onGenerated: (slides: SlideData[], title: string, theme: ThemeConfig) => void;
+  onGenerated: (slides: SlideData[], title: string, theme: ThemeConfig, meta: GenerationMeta) => void;
 }
 
 export function GenerationForm({ onGenerated }: Props) {
@@ -46,7 +46,7 @@ export function GenerationForm({ onGenerated }: Props) {
         throw new Error(err.error ?? "Erro ao gerar carrossel");
       }
       const data = await res.json();
-      onGenerated(data.slides, data.title, selectedTheme);
+      onGenerated(data.slides, data.title, selectedTheme, { topic: form.topic, tone: form.tone, niche: form.niche });
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Erro inesperado");
     } finally {
