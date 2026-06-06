@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { CreditCard, User } from "lucide-react";
+import { CreditCard, User, Bot } from "lucide-react";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -44,6 +44,21 @@ export default async function SettingsPage() {
           </div>
           <Button asChild variant="outline" size="sm" className="border-white/10 text-white hover:bg-white/5">
             <Link href="/settings/billing">Gerenciar</Link>
+          </Button>
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Bot className="h-5 w-5 text-indigo-400" />
+            <div>
+              <h2 className="font-semibold text-white">Configuração de IA</h2>
+              <p className="text-sm text-white/40">Providers, fallback automático e status</p>
+            </div>
+          </div>
+          <Button asChild variant="outline" size="sm" className="border-white/10 text-white hover:bg-white/5">
+            <Link href="/settings/ai">Configurar</Link>
           </Button>
         </div>
       </div>
