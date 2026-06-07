@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { SocialConnectionCard, type SocialConnection, type Platform } from "@/components/publish/SocialConnectionCard";
 import { PublishForm } from "@/components/publish/PublishForm";
 import { ScheduledPostCard, type ScheduledPost } from "@/components/publish/ScheduledPostCard";
 import { Share2, Wifi, Clock } from "lucide-react";
+import { toast } from "sonner";
 
 const ALL_PLATFORMS: Platform[] = ["instagram", "facebook", "linkedin", "twitter", "tiktok"];
 
@@ -24,6 +26,23 @@ interface Props {
 export function PublishClientPage({ initialConnections, carousels, initialPosts }: Props) {
   const [connections, setConnections] = useState<SocialConnection[]>(initialConnections);
   const [posts, setPosts] = useState<ScheduledPost[]>(initialPosts);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const connected = searchParams.get("connected");
+    const error = searchParams.get("error");
+    if (connected) {
+      toast.success(`${connected.charAt(0).toUpperCase() + connected.slice(1)} conectado com sucesso!`);
+    } else if (error === "oauth_denied") {
+      toast.error("Autorização negada pelo usuário.");
+    } else if (error === "oauth_not_configured") {
+      const platform = searchParams.get("platform") ?? "";
+      toast.error(`Credenciais OAuth para ${platform} não configuradas. Adicione as variáveis de ambiente.`, { duration: 8000 });
+    } else if (error) {
+      toast.error(`Erro ao conectar: ${decodeURIComponent(error)}`);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Organise connections by platform for quick lookup
   const connectionByPlatform = Object.fromEntries(

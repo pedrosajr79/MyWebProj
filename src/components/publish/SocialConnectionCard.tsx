@@ -109,22 +109,8 @@ export function SocialConnectionCard({ connection, platform, onDisconnect, onCon
 
   const handleConnect = async () => {
     setLoading(true);
-    try {
-      // TODO: Implement real OAuth flow for each platform.
-      // For Instagram/Facebook: redirect to Meta OAuth URL:
-      //   https://www.facebook.com/v18.0/dialog/oauth?client_id={APP_ID}&redirect_uri={CALLBACK_URI}&scope=instagram_basic,instagram_content_publish,pages_read_engagement
-      // The callback at /api/publish/connections/callback will exchange the code for tokens.
-      // For LinkedIn: https://www.linkedin.com/oauth/v2/authorization
-      // For Twitter/X: https://twitter.com/i/oauth2/authorize
-      // For TikTok: https://www.tiktok.com/auth/authorize/
-      toast.info(
-        `Integração OAuth com ${config.label} ainda não implementada. Configure suas credenciais de app e implemente o fluxo OAuth.`,
-        { duration: 6000 }
-      );
-      onConnect?.(platform);
-    } finally {
-      setLoading(false);
-    }
+    // Redirect to OAuth initiation endpoint — server will build the provider URL
+    window.location.href = `/api/publish/connections/oauth/${platform}`;
   };
 
   return (

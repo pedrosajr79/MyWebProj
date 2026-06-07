@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Plus, FolderOpen, CalendarDays, Settings, Zap, ChevronRight, Share2 } from "lucide-react";
+import { LayoutDashboard, Plus, FolderOpen, CalendarDays, Settings, Zap, ChevronRight, Share2, BarChart3 } from "lucide-react";
 
 const nav = [
   { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
@@ -10,6 +10,7 @@ const nav = [
   { href: "/carousels", icon: FolderOpen, label: "Meus Carrosséis" },
   { href: "/publish", icon: Share2, label: "Publicar" },
   { href: "/calendar", icon: CalendarDays, label: "Calendário" },
+  { href: "/metrics", icon: BarChart3, label: "Métricas" },
   { href: "/settings", icon: Settings, label: "Configurações" },
 ];
 
