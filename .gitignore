@@ -28,6 +28,10 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# claude code — contém chaves de API, não commitar
+.mcp.json
+.claude/settings.local.json
+
 # vercel
 .vercel
 
