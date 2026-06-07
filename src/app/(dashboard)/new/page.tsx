@@ -11,6 +11,7 @@ import { useCarouselReview } from "@/hooks/useCarouselReview";
 import type { SlideData, ThemeConfig, GenerationMeta } from "@/types/carousel";
 import { Save, RefreshCw, Sparkles, ClipboardCheck, Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { ViralGenerator } from "@/components/generation/ViralGenerator";
 
 type Step = "form" | "preview" | "review" | "done";
 
@@ -37,6 +38,16 @@ export default function NewCarouselPage() {
 
   // Final slides: after review, use reviewedSlides; before, use rawSlides
   const finalSlides = step === "done" || step === "review" ? reviewedSlides : rawSlides;
+
+  function handleViralApply(slides: import("@/types/carousel").SlideData[], viralTitle: string, hashtags: string[], _caption: string) {
+    setRawSlides(slides);
+    setTitle(viralTitle);
+    setMeta({ topic: viralTitle, tone: "casual", niche: "marketing" });
+    // Store hashtags for the publish flow (saved in state; user can edit in publish page)
+    sessionStorage.setItem("viral_hashtags", JSON.stringify(hashtags));
+    setStep("preview");
+    toast.success("Modo Viral ativado! Revise o preview e personalize o tema.");
+  }
 
   function handleGenerated(newSlides: SlideData[], newTitle: string, newTheme: ThemeConfig, newMeta: GenerationMeta) {
     setRawSlides(newSlides);
@@ -123,6 +134,14 @@ export default function NewCarouselPage() {
               <Sparkles className="h-4 w-4 text-indigo-400" />
             </div>
             <h2 className="font-semibold text-white">Configurar carrossel</h2>
+          </div>
+          <div className="mb-5">
+            <ViralGenerator onApply={handleViralApply} />
+          </div>
+          <div className="flex items-center gap-3 my-5">
+            <div className="flex-1 border-t border-white/8" />
+            <span className="text-xs text-white/25">ou crie manualmente</span>
+            <div className="flex-1 border-t border-white/8" />
           </div>
           <GenerationForm onGenerated={handleGenerated} />
         </div>

@@ -96,6 +96,70 @@ Seja honesto sobre riscos e complexidade. Priorize qualidade sobre quantidade.
 Responda APENAS o JSON, sem markdown.`;
 }
 
+// ─── Viral content prompts ───────────────────────────────────────────────────
+
+const HASHTAG_LIMITS: Record<string, number> = {
+  instagram: 5,
+  facebook: 5,
+  linkedin: 5,
+  twitter: 2,
+  tiktok: 5,
+};
+
+export const VIRAL_SYSTEM_PROMPT = `Você é um estrategista de conteúdo viral especializado em redes sociais brasileiras.
+Você analisa conteúdos que viralizaram, identifica o que os tornou virais e cria versões melhoradas com alto potencial de alcance.
+Seu foco é: ganchos emocionais fortes, SEO de hashtag, copywriting persuasivo e estrutura de carrossel que retém atenção.
+Sempre responda em português do Brasil com JSON válido e exato.`;
+
+export function buildViralPrompt({
+  platform,
+  niche,
+  trendingContent,
+  slideCount,
+}: {
+  platform: string;
+  niche: string;
+  trendingContent: string;
+  slideCount: number;
+}): string {
+  const maxHashtags = HASHTAG_LIMITS[platform] ?? 5;
+  return `Você recebeu os seguintes dados de conteúdos com alto engajamento na internet sobre "${niche}" para ${platform}:
+
+=== CONTEÚDOS TRENDING ===
+${trendingContent}
+=== FIM DOS CONTEÚDOS ===
+
+TAREFA: Crie um carrossel MELHORADO com ${slideCount} slides que:
+1. Se inspire nos elementos virais identificados (mas seja ORIGINAL, não copie)
+2. Melhore os pontos fracos dos conteúdos trending
+3. Use gatilhos emocionais: curiosidade, utilidade, surpresa, transformação
+4. Tenha SEO forte: termos buscados, linguagem natural, palavras de impacto
+5. Seja otimizado para ${platform}
+
+REGRAS DOS SLIDES:
+- Slide 0 (cover): tipo "cover" — título impactante de até 7 palavras com gancho irresistível + subtítulo
+- Slides 1 a ${slideCount - 2} (content): tipo "content" — cada um entrega valor real, concreto e surpreendente
+- Último slide (cta): tipo "cta" — call-to-action forte com urgência ou benefício claro
+
+HASHTAGS (exatamente ${maxHashtags} — as mais viralizadas para ${platform} no nicho ${niche}):
+- Misture hashtags grandes (1M+), médias (100K-1M) e de nicho (<100K)
+- Inclua pelo menos 1 hashtag trending do momento
+- Sem #, serão adicionados automaticamente
+
+Retorne APENAS este JSON, sem markdown:
+{
+  "title": "Título geral do carrossel",
+  "slides": [
+    { "index": 0, "type": "cover", "title": "Gancho viral aqui", "body": "Subtítulo que aumenta curiosidade", "emoji": "🔥" },
+    { "index": 1, "type": "content", "title": "Ponto surpreendente 1", "body": "Informação valiosa e específica que o público não esperava.", "emoji": "💡" }
+  ],
+  "hashtags": ["hashtag1", "hashtag2", "hashtag3", "hashtag4", "hashtag5"],
+  "caption": "Legenda do post otimizada para ${platform} com gancho inicial forte (máx 150 chars)",
+  "viralElements": ["Por que esse conteúdo vai viralizar: elemento 1", "elemento 2"],
+  "seoTips": ["Dica de SEO específica para ${platform} 1", "dica 2"]
+}`;
+}
+
 // ─── Review prompts ──────────────────────────────────────────────────────────
 
 export function buildReviewPrompt(
