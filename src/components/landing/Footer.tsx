@@ -35,17 +35,18 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4">Legal</h4>
+            <h4 className="text-sm font-semibold text-white mb-4">Legal & LGPD</h4>
             <ul className="space-y-3 text-sm text-white/50">
-              {["Termos de Uso", "Privacidade", "Cookies", "Contato"].map(t => (
-                <li key={t}><a href="#" className="hover:text-white transition-colors">{t}</a></li>
-              ))}
+              <li><Link href="/termos" className="hover:text-white transition-colors">Termos de Uso</Link></li>
+              <li><Link href="/privacidade" className="hover:text-white transition-colors">Política de Privacidade</Link></li>
+              <li><a href="mailto:privacidade@carrosseiro.com.br" className="hover:text-white transition-colors">DPO / Privacidade</a></li>
+              <li><a href="mailto:suporte@carrosseiro.com.br" className="hover:text-white transition-colors">Contato</a></li>
             </ul>
           </div>
         </div>
 
         <div className="mt-12 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-white/30">© 2025 Carrosseiro. Todos os direitos reservados.</p>
+          <p className="text-sm text-white/30">© 2026 Carrosseiro. Todos os direitos reservados. LGPD compliant.</p>
           <p className="text-sm text-white/30">Feito com ❤️ para criadores de conteúdo brasileiros</p>
         </div>
       </div>

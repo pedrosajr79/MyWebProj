@@ -52,6 +52,52 @@ Sempre retorne um JSON válido com a estrutura exata especificada.
 Sugira melhorias que respeitem o tom e nicho especificados.
 Responda em português do Brasil.`;
 
+// ─── Research prompt ─────────────────────────────────────────────────────────
+
+export const RESEARCH_SYSTEM_PROMPT = `Você é um engenheiro de software sênior especialista em produtos SaaS e ferramentas de criação de conteúdo para redes sociais.`;
+
+export function buildResearchPrompt(): string {
+  return `Sua tarefa é realizar uma análise completa de mercado para o produto "Carrosseiro" — uma plataforma SaaS de geração de carrosséis para Instagram usando IA.
+
+Analise e responda em JSON com EXATAMENTE esta estrutura:
+{
+  "competitorAnalysis": [
+    {
+      "name": "Nome do concorrente",
+      "description": "O que fazem",
+      "strengths": ["ponto forte 1", "ponto forte 2"],
+      "weaknesses": ["fraqueza 1"],
+      "keyFeatures": ["feature 1", "feature 2"]
+    }
+  ],
+  "featureSuggestions": [
+    {
+      "id": "slug-da-feature",
+      "name": "Nome da feature",
+      "description": "Descrição detalhada do que implementar e por quê",
+      "priority": "high|medium|low",
+      "effort": "easy|medium|complex",
+      "impact": "Descrição do impacto no negócio e na retenção",
+      "risk": "Descrição de riscos técnicos ou de negócio",
+      "verdict": "Aprovado|Aprovado com ressalvas|Não recomendado agora",
+      "verdictReason": "Justificativa técnica do engenheiro",
+      "techStack": ["tecnologias sugeridas"]
+    }
+  ],
+  "marketTrends": ["tendência 1", "tendência 2"],
+  "securityRecommendations": ["recomendação de segurança 1"],
+  "summary": "Resumo executivo da análise"
+}
+
+Analise os principais concorrentes (Canva, Later, Hootsuite, ManyChat, Publer, etc.) e ferramentas similares de carrossel.
+Sugira pelo menos 8 features concretas e implementáveis, avaliadas criticamente como um engenheiro sênior.
+Foco em features que: aumentam retenção, diferenciam o produto, são viáveis com stack Next.js/Supabase/IA.
+Seja honesto sobre riscos e complexidade. Priorize qualidade sobre quantidade.
+Responda APENAS o JSON, sem markdown.`;
+}
+
+// ─── Review prompts ──────────────────────────────────────────────────────────
+
 export function buildReviewPrompt(
   slides: SlideData[],
   context: { topic: string; tone: string; niche: string }
